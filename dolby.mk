@@ -56,10 +56,6 @@ PRODUCT_VENDOR_PROPERTIES += \
 PRODUCT_PACKAGES += \
     LunarisDolby
 
-# Init
-PRODUCT_PACKAGES += \
-    init.dolby.rc
-
 # USE_HWDAP must be defined before inheriting this product file.
 $(call soong_config_set_bool,dolby_codec2,use_hwdap,$(USE_HWDAP))
 
