@@ -60,6 +60,18 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     init.dolby.rc
 
+# USE_HWDAP must be defined before inheriting this product file.
+$(call soong_config_set_bool,dolby_codec2,use_hwdap,$(USE_HWDAP))
+
+ifeq ($(USE_HWDAP),true)
+PRODUCT_PACKAGES += \
+    libhwdap
+else
+PRODUCT_PACKAGES += \
+    libswdap \
+    libcodec2_soft_dolby
+endif
+
 # Proprietary-files
 PRODUCT_COPY_FILES += \
     $(DOLBY_PATH)/proprietary/vendor/etc/init/vendor.dolby.hardware.dms@2.0-service.rc:$(TARGET_COPY_OUT_VENDOR)/etc/init/vendor.dolby.hardware.dms@2.0-service.rc \
@@ -72,7 +84,6 @@ PRODUCT_PACKAGES += \
     vendor.dolby.media.c2@1.0-service \
     libcodec2_soft_ac4dec \
     libcodec2_soft_ddpdec \
-    libcodec2_soft_dolby \
     libcodec2_store_dolby \
     libdapparamstorage \
     libdeccfg \
@@ -85,11 +96,3 @@ PRODUCT_PACKAGES += \
     libswgamedap \
     libswspatializer \
     libswvqe
-
-ifeq ($(USE_HWDAP),true)
-PRODUCT_PACKAGES += \
-    libhwdap
-else
-PRODUCT_PACKAGES += \
-    libswdap
-endif
